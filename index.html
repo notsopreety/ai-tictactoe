@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title animate__animated animate__fadeIn">AI Tic Tac Toe</h1>
+        
+        <div class="scores animate__animated animate__fadeIn">
+            <div class="score">
+                <span>Human:</span>
+                <span id="playerScore">0</span>
+            </div>
+            <div class="score">
+                <span>AI:</span>
+                <span id="aiScore">0</span>
+            </div>
+        </div>
+
+        <div id="status" class="status animate__animated animate__fadeIn">Your turn!</div>
+        <div id="commentary" class="commentary animate__animated animate__fadeIn"></div>
+
+        <div class="game-board animate__animated animate__fadeIn">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+            <div id="winLine" class="win-line"></div>
+        </div>
+
+        <div class="controls">
+            <button id="resetBtn" class="animate__animated animate__fadeIn">New Game</button>
+            <div class="game-settings animate__animated animate__fadeIn">
+                <div class="difficulty">
+                    <span>AI Mode:</span>
+                    <select id="aiDifficulty">
+                        <option value="easy">Casual</option>
+                        <option value="medium" selected>Serious</option>
+                        <option value="hard">Ruthless</option>
+                    </select>
+                </div>
+                <div class="speech-toggle">
+                    <span>AI Voice:</span>
+                    <button id="speechToggle" class="toggle-btn" aria-label="Toggle AI Speech">
+                        <span class="toggle-icon">🔊</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="credits animate__animated animate__fadeIn">
+            Created by <a href="https://github.com/notsopreety" target="_blank">Samir Thakuri</a>
+            <span class="credit-divider">|</span>
+            <span class="ai-credit">Powered by AI</span>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
