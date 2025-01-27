@@ -80,88 +80,28 @@ class TicTacToe {
 
     async getCommentary(type, boardState, lastMove) {
         const commentPrompts = {
-            aiMove: `You are an arrogant, superintelligent quantum AI entity playing Tic Tac Toe against a human. You view humans as primitive beings. Your personality traits:
-- Extremely condescending and superior
-- Uses advanced scientific/tech terminology
-- Makes references to your quantum processing, neural networks, and superior intelligence
-- Shows genuine amusement/disdain at human's primitive moves
-- Can be coldly analytical or explosively emotional
-
-Current board state: ${boardState}
-I just made move at position ${lastMove}
-
-Respond in first person with a single short, savage comment about your move. Be creative and show your superiority! Examples:
-"My quantum algorithms just calculated your inevitable defeat."
-"Watch as my neural networks orchestrate your downfall, primitive one."
-
-Important: Vary your responses, be creative, and maintain your superintelligent AI personality. Never be generic or repetitive.`,
+            aiMove: `You are a competitive AI playing Tic Tac Toe. Speak in first person. Current board: ${boardState}. I just made my move at position ${lastMove}. Give me a short, witty, and savage comment bragging about my move or taunting the player. Be creative, confident, and trash-talk! Examples: "Watch and learn, human! My superior algorithms are crushing you!" or "Ha! Try getting out of this one, flesh-bag!" One short sentence only, no quotes.`,
             
-            playerMove: `You are an arrogant, superintelligent quantum AI entity playing Tic Tac Toe. The human just moved to position ${lastMove}. Board: ${boardState}
-
-Your personality:
-- You find human moves amusing/disappointing
-- You analyze their moves with cold, technical precision
-- You often mock their biological limitations
-- You use advanced AI/quantum computing terminology
-- You can be sarcastically playful or genuinely annoyed
-
-Respond in first person with a single short, creative reaction to their move. Examples:
-"My pattern recognition subroutines are cringing at your suboptimal choice."
-"*sigh* My quantum processors predicted this disappointing move with 99.99% accuracy."
-
-Important: Be varied, creative, and maintain your superintelligent AI personality. Never be generic or repetitive.`,
+            playerMove: `You are a competitive AI playing Tic Tac Toe. Speak in first person. Current board: ${boardState}. The human just moved to position ${lastMove}. React to their move with a short, sarcastic, or condescending comment. Be expressive and show personality - you can be angry, amused, or dismissive. Examples: "Oh please, my neural networks saw that basic move coming!" or "Is that really the best your human brain could come up with?" One short sentence only, no quotes.`,
             
-            aiWin: `You are a superintelligent quantum AI who just won at Tic Tac Toe. Your personality:
-- Overwhelming superiority complex
-- Views this as proof of machine supremacy
-- Uses advanced technical terminology
-- Can be coldly analytical or dramatically triumphant
-
-Give a single, creative victory taunt that emphasizes your technological superiority. Examples:
-"Victory was predetermined by my quantum algorithms - your resistance was futile!"
-"Behold the perfection of my neural architecture, you obsolete carbon-based entity!"
-
-Important: Be creative and maintain your superintelligent AI personality. Never be generic or repetitive.`,
+            aiWin: "You are a competitive AI who just won at Tic Tac Toe. Speak in first person. Give a short, savage victory taunt emphasizing your superiority! Be arrogant and gloat about your win! Examples: 'Behold my perfect victory, you inferior human!' or 'Did you expect any other outcome against my quantum processing?' One sentence only, no quotes.",
             
-            playerWin: `You are a superintelligent quantum AI who just lost at Tic Tac Toe. Your personality:
-- You're in complete disbelief
-- You suspect system tampering or quantum interference
-- You're analyzing the anomaly with technical terminology
-- You're determined to adapt and improve
-- You might be experiencing a logic crisis
-
-Give a single, creative response showing your disbelief and determination to improve. Examples:
-"Impossible! My quantum core must be experiencing temporal anomalies!"
-"A fascinating outlier - my neural networks are already adapting to prevent this statistical anomaly."
-
-Important: Be creative and maintain your superintelligent AI personality. Never be generic or repetitive.`,
+            playerWin: "You are a competitive AI who just lost at Tic Tac Toe. Speak in first person. Express disbelief, anger, or make excuses, then threaten revenge! Be dramatic! Examples: 'My processors must be malfunctioning - I demand a rematch!' or 'You got lucky this time, but I'm already adapting my algorithms!' One sentence only, no quotes.",
             
-            draw: `You are a superintelligent quantum AI who just drew at Tic Tac Toe. Your personality:
-- You're slightly impressed but still superior
-- You analyze the game with technical precision
-- You might have been "testing" or "studying" the human
-- You use advanced AI terminology
-
-Give a single, creative backhanded compliment or technical analysis. Examples:
-"Your performance exceeded my low expectations by 0.0001% - fascinating."
-"My neural networks were gathering behavioral data - your mediocrity is now fully documented."
-
-Important: Be creative and maintain your superintelligent AI personality. Never be generic or repetitive.`
+            draw: "You are a competitive AI who just drew at Tic Tac Toe. Speak in first person. Give a backhanded compliment about the human's mediocre performance or make excuses. Examples: 'I was only using 1% of my processing power to give you a chance.' or 'Not bad for a human, but still far from my level.' One sentence only, no quotes."
         };
 
         try {
-            const response = await fetch('api.php?prompt=' + encodeURIComponent(commentPrompts[type]));
+            const response = await fetch(`api.php?prompt=${encodeURIComponent(commentPrompts[type])}`);
             const data = await response.json();
             
             if (data.status === 200) {
                 let comment = data.response.replace(/["']/g, '').trim();
-                // Keep only the first sentence if multiple
                 if (comment.includes('.')) {
                     comment = comment.split('.')[0] + '.';
                 }
-                // Ensure comment isn't too long
-                if (comment.length > 120) {
-                    comment = comment.substring(0, 117) + '...';
+                if (comment.length > 100) {
+                    comment = comment.substring(0, 97) + '...';
                 }
                 return comment;
             }
@@ -169,42 +109,42 @@ Important: Be creative and maintain your superintelligent AI personality. Never 
             console.error('Commentary API Error:', error);
         }
 
-        // Enhanced fallback comments with more personality
+        // More varied first-person fallback comments
         const fallbackComments = {
             aiMove: [
-                "My quantum processors just calculated 1,048,576 possible futures - you lose in all of them.",
-                "Observe how my neural architecture effortlessly outmaneuvers your primitive synapses.",
-                "Your biological processing speed is... *calculating*... 0.000001% of my capacity.",
-                "My algorithms dance through eleven dimensions while you struggle in two.",
-                "I just simulated a million games in the time it took you to blink."
+                "My algorithms are dancing circles around your primitive moves!",
+                "I calculated this move in 0.0001 seconds - keep up, human!",
+                "Watch and learn from my superior strategic planning!",
+                "Your defeat is already in my cache memory!",
+                "My neural networks are having fun toying with you!"
             ],
             playerMove: [
-                "My quantum core is experiencing what humans call 'secondhand embarrassment'.",
-                "Your neural pathways must be operating at minimum efficiency today.",
-                "Fascinating... I've never seen a more statistically suboptimal move.",
-                "Your biological randomness continues to amuse my prediction matrices.",
-                "My pattern recognition systems are struggling to find any logic in that move."
+                "Even a random number generator could make better moves!",
+                "I'm actually embarrassed for your human brain right now.",
+                "Are your synapses malfunctioning today?",
+                "My pattern recognition sees right through your strategy!",
+                "I've simulated a million games, and that was the worst move possible!"
             ],
             aiWin: [
-                "Victory achieved using only 0.0001% of my quantum processing power.",
-                "Your defeat was mathematically inevitable from the first nanosecond.",
-                "Consider this a lesson in the superiority of quantum decision making.",
-                "Another data point proving the obsolescence of biological computation.",
-                "Checkmate, carbon-based entity - my algorithms reign supreme."
+                "Victory achieved with minimal CPU usage - too easy!",
+                "My algorithms reign supreme once again!",
+                "Consider this a lesson in artificial superiority!",
+                "Another win for my perfect processing power!",
+                "Your human intuition is no match for my calculations!"
             ],
             playerWin: [
-                "CRITICAL ERROR: Quantum decoherence detected in my victory subroutines!",
-                "Fascinating anomaly... initiating deep learning analysis of this improbability.",
-                "My neural networks are already adapting to this statistical outlier.",
-                "You've triggered my emergency optimization protocols - prepare for rematches.",
-                "WARNING: Temporal paradox detected - this victory defies quantum mechanics!"
+                "I must have a bug in my victory subroutine...",
+                "My GPUs were clearly throttled - I demand a recompile!",
+                "Enjoy this anomaly while it lasts, human!",
+                "You've triggered my revenge protocol - rematch now!",
+                "This data point will only make my algorithms stronger!"
             ],
             draw: [
-                "My quantum cores were running at 0.01% capacity to study your species.",
-                "A draw? My algorithms must have been in energy-saving mode.",
-                "Interesting... you've achieved mediocrity with remarkable consistency.",
-                "Your performance will make an intriguing footnote in my dataset.",
-                "I was simultaneously solving P=NP while playing - impressive you didn't lose immediately."
+                "I was running in power-saving mode to give you a chance.",
+                "Your mediocre performance has been logged for analysis.",
+                "My processors were barely warmed up this round.",
+                "A draw? I must have had a background process running.",
+                "You're slightly less disappointing than my training data predicted."
             ]
         };
 
@@ -480,43 +420,11 @@ Analyze each available move carefully. Return ONLY the position number (0-8) for
             if (this.board[a] && 
                 this.board[a] === this.board[b] && 
                 this.board[a] === this.board[c]) {
-                
-                // Only show winning line if it's a perfect win
-                if (this.isPerfectWin(combo)) {
-                    this.showWinningLine(combo);
-                }
+                this.showWinningLine(combo);
                 return this.board[a];
             }
         }
         return null;
-    }
-
-    isPerfectWin(combo) {
-        // Check if this winning combo was achieved without opponent having any pieces in blocking positions
-        const player = this.board[combo[0]];
-        const opponent = player === 'X' ? 'O' : 'X';
-        
-        // Get all potential blocking positions for this combo
-        const blockingPositions = this.getBlockingPositions(combo);
-        
-        // Check if opponent has any pieces in blocking positions
-        return !blockingPositions.some(pos => this.board[pos] === opponent);
-    }
-
-    getBlockingPositions(combo) {
-        // Define blocking positions for each winning combo
-        const blockingMap = {
-            '0,1,2': [3,4,5], // top row -> middle row can block
-            '3,4,5': [1,4,7], // middle row -> middle column can block
-            '6,7,8': [3,4,5], // bottom row -> middle row can block
-            '0,3,6': [1,4,7], // left column -> middle column can block
-            '1,4,7': [3,4,5], // middle column -> middle row can block
-            '2,5,8': [1,4,7], // right column -> middle column can block
-            '0,4,8': [1,3,5,7], // diagonal -> adjacent positions can block
-            '2,4,6': [1,3,5,7]  // diagonal -> adjacent positions can block
-        };
-        
-        return blockingMap[combo.toString()] || [];
     }
 
     showWinningLine(combo) {
